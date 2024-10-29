@@ -1,9 +1,11 @@
 package com.example.homework25;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,19 +19,30 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isOperationClick;
     private String operator;
     private Boolean clickedPerc = false;
+    private Button btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.text_view);
+    btn2 = findViewById(R.id.buttonafter);
+        btn2.setVisibility(View.GONE);
+
+
+    findViewById(R.id.buttonafter).setOnClickListener(v -> {
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class );
+        startActivity(intent);
+    });
     }
 
 
     public void onNumberClick(View view) {
         clickedPerc = false;
         String text = ((MaterialButton) view).getText().toString();
+
+        btn2.setVisibility(View.GONE);
+
         if (text.equals("AC")) {
             textView.setText("0");
             firstValue = 0.0;
@@ -49,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public void onOperationClick(View view) {
         String textButton = ((Button) view).getText().toString();
         switch (textButton) {
+
             case "+":
                 firstValue = Double.valueOf(textView.getText().toString());
                 operator = "+";
@@ -105,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                 }
+                btn2.setVisibility(View.VISIBLE);
                 break;
         }
         isOperationClick = true;
-
     }
 
     private void displayResult(double result) {
